@@ -1,0 +1,5 @@
+.venv
+incident_report/incident/__pycache__
+incident_report/incident/migrations/__pycache__
+incident_report/incident_report/__pycache__
+incident_report/staticfiles
