@@ -19,3 +19,9 @@ def incident_create(request):
             form.save()
             return redirect('incident_list')
     return render(request, 'incident_create.html', {'form': form})
+
+
+def profile(request):
+    return render(request, 'pages/profile/overview.html')
+
+
