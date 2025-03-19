@@ -1,6 +1,187 @@
-<h1>Crear Incidente</h1>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Guardar</button>
-</form>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Crear Incidente{% endblock %}
+
+{% block content %}
+
+<div class="toolbar" id="kt_toolbar">
+	<!--begin::Container-->
+	<div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+		<!--begin::Page title-->
+		<div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+			<!--begin::Title-->
+			<h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">Incident Reports</h1>
+			<!--end::Title-->
+			<!--begin::Separator-->
+			<span class="h-20px border-gray-200 border-start mx-4"></span>
+			<!--end::Separator-->
+			<!--begin::Breadcrumb-->
+			<ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+				<!--begin::Item-->
+				<li class="breadcrumb-item text-muted">
+					<a href="../../demo1/dist/index.html" class="text-muted text-hover-primary">Home</a>
+				</li>
+				<!--end::Item-->
+				<!--begin::Item-->
+				<li class="breadcrumb-item">
+					<span class="bullet bg-gray-200 w-5px h-2px"></span>
+				</li>
+				<!--end::Item-->										
+				<!--begin::Item-->
+				<li class="breadcrumb-item">
+					<span class="bullet bg-gray-200 w-5px h-2px"></span>
+				</li>
+				<!--end::Item-->
+				<!--begin::Item-->
+				<li class="breadcrumb-item text-dark">Incident Reports</li>
+				<!--end::Item-->
+			</ul>
+			<!--end::Breadcrumb-->
+		</div>
+		<!--end::Page title-->
+		
+	</div>
+	<!--end::Container-->
+</div>
+<!--end::Toolbar-->
+<!--begin::Post-->
+<div class="post d-flex flex-column-fluid" id="kt_post">
+	<!--begin::Container-->
+	<div id="kt_content_container" class="container-xxl">
+		
+		<!--begin::Tables Widget 9-->
+		<div class="card mb-5 mb-xl-8">
+			<!--begin::Header-->
+			<div class="card-header border-0 pt-5">
+				<h3 class="card-title align-items-start flex-column">
+					<span class="card-label fw-bolder fs-3 mb-1">Create Incident</span>
+					
+				</h3>
+				
+			</div>
+			<!--end::Header-->
+			<!--begin::Body-->
+			<div class="card-body py-3">
+				<!--begin::Table container-->
+				<form id="kt_account_profile_details_form" method="post"  enctype="multipart/form-data">
+
+                    {% csrf_token %}
+                    <!--begin::Card body-->
+                    <div class="card-body border-top p-9">
+                        <!--begin::Input group-->
+                        
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="row mb-6">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 col-form-label required fw-bold fs-6">Title</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8 fv-row">
+                                {{ form.incident_type }}
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="row mb-6">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 col-form-label fw-bold fs-6">
+                                <span class="required">Location</span>
+                                <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Location of the incident"></i>
+                            </label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8 fv-row">
+                                {{ form.incident_location }}
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->                        
+                        <!--begin::Input group-->
+                        <div class="row mb-6">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 col-form-label fw-bold fs-6">
+                                <span class="required">Category</span>
+                                <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i>
+                            </label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8 fv-row">
+                                {{ form.incident_category }}                               
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->                                                
+                        <!--begin::Input group-->
+                        <div class="row mb-6">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 col-form-label fw-bold fs-6">Description</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8 fv-row">
+                                {{ form.incident_description }}                               
+
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="row mb-6">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"></label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8 fv-row">
+                                <!--begin::Options-->
+                                <div class="d-flex align-items-center mt-3 w-100">
+                                    <!--begin::Option-->
+                                    <div class="card h-100 w-100 flex-center bg-light-primary border-primary border border-dashed p-8">
+                                        <!--begin::Image-->
+                                        <img src="{% static 'assets/media/svg/files/upload.svg' %}" alt="Upload Icon" />
+                                        <!--end::Image-->
+                            
+                                        <!--begin::Link-->
+                                        <a href="#" class="text-hover-primary fs-5 fw-bolder mb-2">File Upload</a>
+                                        <!--end::Link-->
+                            
+                                        <!--begin::Description-->
+                                        <div class="fs-7 fw-bold text-gray-400">Drag and drop files here</div>
+                            
+                                        <!-- Campo de carga de archivo -->
+                                        {{ form.incident_image }}                               
+                                        <!--end::Description-->
+                                    </div>
+                                </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->                        
+                    </div>
+                    <!--end::Card body-->
+                    <!--begin::Actions-->
+                    <div class="card-footer d-flex justify-content-end py-6 px-9">
+                        <button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard</button>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="indicator-label">Submit</span>
+                            <span class="indicator-progress">Please wait...
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                        </button>
+                    </div>
+                    <!--end::Actions-->
+                </form>
+				<!--end::Table container-->
+			</div>
+			<!--begin::Body-->
+		</div>
+		<!--end::Tables Widget 9-->
+																		
+	</div>
+	<!--end::Container-->
+</div>
+
+
+{% endblock %}
