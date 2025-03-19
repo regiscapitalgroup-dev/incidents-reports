@@ -78,7 +78,7 @@
                         <!--begin::Input group-->
                         <div class="row mb-6">
                             <!--begin::Label-->
-                            <label class="col-lg-4 col-form-label required fw-bold fs-6">Title</label>
+                            <label class="col-lg-4 col-form-label required fw-bold fs-6">Type</label>
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8 fv-row">
@@ -116,6 +116,21 @@
                             </div>
                             <!--end::Col-->
                         </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="row mb-6">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 col-form-label fw-bold fs-6">
+                                <span class="required">Client</span>
+                                <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i>
+                            </label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8 fv-row">
+                                {{ form.incident_client }}                               
+                            </div>
+                            <!--end::Col-->
+                        </div>                      
                         <!--end::Input group-->                                                
                         <!--begin::Input group-->
                         <div class="row mb-6">

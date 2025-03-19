@@ -81,8 +81,12 @@
 						<!--begin::Table head-->
 						<thead>
 							<tr class="fw-bolder text-muted">								
-								<th class="min-w-150px">Incident description</th>	
-								<th class="min-w-150px">date</th>						
+								<th class="min-w-150px">Incident Type</th>	
+								<th class="min-w-150px">Incident Category</th>
+								<th class="min-w-150px">Incident Location</th>
+								<th class="min-w-150px">Incident Date</th>
+								<th class="min-w-150px">Incident Client</th>
+								<th class="min-w-150px">Incident User</th>
 								<th class="min-w-100px text-end">Actions</th>
 							</tr>
 						</thead>
@@ -92,7 +96,11 @@
 							{% for incident in incidents %}
 							<tr>
 								<td>{{ incident.incident_type }}</td>
-								<td>2025-03-18</td>								
+								<td>{{ incident.incident_category }}</td>
+								<td>{{ incident.incident_location }}</td>
+								<td>{{ incident.incident_date }}</td>
+								<td>{{ incident.incident_client }}</td>
+								<td>{{ incident.incident_user }}</td>
 								<td>
 									<div class="d-flex justify-content-end flex-shrink-0">
 										<a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
