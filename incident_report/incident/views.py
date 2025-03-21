@@ -9,8 +9,8 @@ from django.http import FileResponse
 
 @login_required(login_url = 'login')
 def incident_list(request):
-    incidents = ReporteIncidente.objects.all()
     user_permission = UserPermission.objects.get(user = request.user)
+    incidents = ReporteIncidente.objects.all().filter(company = user_permission.company)
     context = {
         'incidents': incidents, 
         'user_permission': user_permission,
