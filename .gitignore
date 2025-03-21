@@ -6,3 +6,5 @@ incident_report/staticfiles
 incident_report/.DS_Store
 .DS_Store
 incident_report/media
+incident_report/bases/__pycache__
+incident_report/bases/migrations/__pycache__

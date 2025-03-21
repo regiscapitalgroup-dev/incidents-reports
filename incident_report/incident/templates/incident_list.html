@@ -60,7 +60,7 @@
 					
 				</h3>
 				<div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="Click to add a incident report">
-					<a href="{% url 'incident_create' %}" class="btn btn-sm btn-light btn-active-primary">
+					<a href="" class="btn btn-sm btn-light btn-active-primary">
 					<!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
 					<span class="svg-icon svg-icon-3">
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -95,12 +95,12 @@
 						<tbody>
 							{% for incident in incidents %}
 							<tr>
-								<td>{{ incident.incident_type }}</td>
-								<td>{{ incident.incident_category }}</td>
-								<td>{{ incident.incident_location }}</td>
-								<td>{{ incident.incident_date }}</td>
-								<td>{{ incident.incident_client }}</td>
-								<td>{{ incident.incident_user }}</td>
+								<td>{{ incident.tipo_reporte }}</td>
+								<td>{{ incident.categoria_reporte }}</td>
+								<td>{{ incident.ubicacion_reporte }}</td>
+								<td>{{ incident.fecha_reporte }}</td>
+								<td>{{ incident.cliente_reporte }}</td>
+								<td>{{ incident.usuario_reporte }}</td>
 								<td>
 									<div class="d-flex justify-content-end flex-shrink-0">
 										<a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">

@@ -1,25 +1,24 @@
 from django.db import models
 from django.contrib.auth.models import User
-
-
-def upload_file_path(instance, filename):
-    return f"incident_files/{instance.incident_company.company_id}/{instance.incident_branch.branch_id}/{filename}"
+from django.utils import timezone
 
 
 class Company(models.Model):
-    # Soriana
-    company_id = models.AutoField(primary_key=True)
-    company_name = models.CharField(max_length=255)
+    id = models.AutoField(primary_key=True)
+    company_name = models.CharField(max_length=100, verbose_name="Nombre de la Empresa")
 
     def __str__(self):
         return self.company_name
     
+    class Meta:
+        verbose_name = "Empresa"
+        verbose_name_plural = "Empresas"
+
 
 class Branch(models.Model):
-    # Sucursal de Soriana
-    branch_id = models.AutoField(primary_key=True)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    branch_name = models.CharField(max_length=255)
+    id = models.AutoField(primary_key=True)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name="Empresa")
+    branch_name = models.CharField(max_length=255, verbose_name="Nombre de la Sucursal")
 
     def __str__(self):
         return self.branch_name
@@ -30,12 +29,15 @@ class Branch(models.Model):
 
 
 class Permission(models.Model):
-    # Catálogo de permisos
-    permission_id = models.AutoField(primary_key=True)
-    permission_name = models.CharField(max_length=255)
-    permission_is_viewer = models.BooleanField(default=False)
-    permission_is_supervisor = models.BooleanField(default=False)
-    permission_is_admin = models.BooleanField(default=False)
+    id = models.AutoField(primary_key=True)
+    permission_name = models.CharField(max_length=255, verbose_name="Nombre del Permiso/Perfil")
+    permission_elevate = models.BooleanField(default=False, verbose_name="Usuario con permisos Elevados")
+    permission_reporte_semanal_herramienta = models.BooleanField(default=False, verbose_name="Reporte Semanal Herramientas")
+    permission_reporte_quincenal_biometrico = models.BooleanField(default=False, verbose_name="Reporte Quincenal Biométricos")
+    permission_reporte_semanal_drones = models.BooleanField(default=False, verbose_name="Reporte Semanal Drones")
+    permission_reporte_semanal_cctv820 = models.BooleanField(default=False, verbose_name="Reporte Semanal CCTV 820")
+    permission_reporte_mantenimiento_drone = models.BooleanField(default=False, verbose_name="Reporte Mantenimiento Drones")
+    permission_boletin_ciberseguridad = models.BooleanField(default=False, verbose_name="Boletín de Ciberseguridad")
 
     def __str__(self):
         return self.permission_name
@@ -45,9 +47,11 @@ class Permission(models.Model):
         verbose_name_plural = "Permisos"
 
 
-class UserPermition(models.Model):
-    # Usuario con permisos
+class UserPermission(models.Model):
+    id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Usuario")
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name="Empresa")
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE, verbose_name="Sucursal")
     permission = models.ForeignKey(Permission, on_delete=models.CASCADE, verbose_name="Permisos")
 
     def __str__(self):
@@ -59,7 +63,8 @@ class UserPermition(models.Model):
 
 
 class IncidentLocation(models.Model):
-    location = models.CharField(max_length=255)
+    id = models.AutoField(primary_key=True)
+    location = models.CharField(max_length=255, verbose_name="Ubicación")
 
     def __str__(self):
         return self.location
@@ -70,7 +75,8 @@ class IncidentLocation(models.Model):
 
 
 class IncidentType(models.Model):
-    incident_type = models.CharField(max_length=255)
+    id = models.AutoField(primary_key=True)
+    incident_type = models.CharField(max_length=255, verbose_name="Tipo de incidente")
 
     def __str__(self):
         return self.incident_type
@@ -82,7 +88,8 @@ class IncidentType(models.Model):
 
 
 class IncidentCategory(models.Model):
-    category = models.CharField(max_length=255)
+    id = models.AutoField(primary_key=True)
+    category = models.CharField(max_length=255, verbose_name="Categoría de incidente")
 
     def __str__(self):
         return self.category
@@ -92,21 +99,38 @@ class IncidentCategory(models.Model):
         verbose_name_plural = "Categorías de incidentes"
 
 
-class Incident(models.Model):
-    incident_id = models.AutoField(primary_key=True)
-    incident_company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True, blank=True)
-    incident_branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=True, blank=True)
-    incident_type = models.ForeignKey(IncidentType, on_delete=models.CASCADE)
-    incident_category = models.ForeignKey(IncidentCategory, on_delete=models.CASCADE)
-    incident_description = models.TextField()
-    incident_date = models.DateTimeField(auto_now_add=True)
-    incident_location = models.ForeignKey(IncidentLocation, on_delete=models.CASCADE)
-    incident_file = models.FileField(upload_to=upload_file_path, null=True, blank=True)
-    incident_user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+
+
+
+
+class EstatusReporte(models.Model):
+    id = models.AutoField(primary_key=True)
+    estatus = models.CharField(max_length=255, verbose_name="Estatus")
 
     def __str__(self):
-        return str(self.incident_type) + " " + str(self.incident_location)
-
+        return self.estatus
+    
     class Meta:
-        verbose_name = "Incidente"
-        verbose_name_plural = "Incidentes"
+        verbose_name = "Estatus de reporte"
+        verbose_name_plural = "Estatus de reportes"
+
+
+
+class ReporteIncidente(models.Model):
+    id = models.AutoField(primary_key=True)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name="Empresa")
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE, verbose_name="Sucursal")
+    description = models.TextField(verbose_name="Descripción")
+    report_date = models.DateField(default=timezone.now, verbose_name="Fecha de reporte")
+    tipo_reporte = models.ForeignKey(IncidentType, on_delete=models.CASCADE, verbose_name="Tipo de reporte")
+    categoria_reporte = models.ForeignKey(IncidentCategory, on_delete=models.CASCADE, verbose_name="Categoría de reporte")
+    estatus_reporte = models.ForeignKey(EstatusReporte, on_delete=models.CASCADE, verbose_name="Estatus de reporte", null=True, blank=True)
+
+    pdf_file = models.FileField(upload_to='reporte_incidente/', verbose_name="Archivo PDF")
+
+    def __str__(self):
+        return "Reporte de incidente: {} / {} / {}".format(self.tipo_reporte, self.categoria_reporte, self.report_date)
+    
+    class Meta:
+        verbose_name = "Reporte de incidente"
+        verbose_name_plural = "Reportes de incidentes"
