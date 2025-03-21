@@ -10,7 +10,8 @@ from django.http import FileResponse
 @login_required(login_url = 'login')
 def incident_list(request):
     user_permission = UserPermission.objects.get(user = request.user)
-    incidents = ReporteIncidente.objects.all().filter(company = user_permission.company)
+    incidents = ReporteIncidente.objects.all().filter(company = user_permission.company, 
+                    branch = user_permission.branch)
     context = {
         'incidents': incidents, 
         'user_permission': user_permission,
@@ -26,7 +27,6 @@ def view_pdf(request, pk):
         raise Http404("El reporte de incidente no existe")
     if request.method == 'GET':
         response = FileResponse(open(incident.pdf_file.path, 'rb'))
-        # response['Content-Disposition'] = f'inline; filename="{incident.pdf_file.name}"'
         return response
     else:
         return HttpResponseNotFound("El reporte de incidente no existe")
