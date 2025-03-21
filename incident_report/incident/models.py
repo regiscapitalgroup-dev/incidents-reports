@@ -28,31 +28,14 @@ class Branch(models.Model):
         verbose_name_plural = "Sucursales"
 
 
-class Permission(models.Model):
-    id = models.AutoField(primary_key=True)
-    permission_name = models.CharField(max_length=255, verbose_name="Nombre del Permiso/Perfil")
-    permission_elevate = models.BooleanField(default=False, verbose_name="Usuario con permisos Elevados")
-    permission_reporte_semanal_herramienta = models.BooleanField(default=False, verbose_name="Reporte Semanal Herramientas")
-    permission_reporte_quincenal_biometrico = models.BooleanField(default=False, verbose_name="Reporte Quincenal Biométricos")
-    permission_reporte_semanal_drones = models.BooleanField(default=False, verbose_name="Reporte Semanal Drones")
-    permission_reporte_semanal_cctv820 = models.BooleanField(default=False, verbose_name="Reporte Semanal CCTV 820")
-    permission_reporte_mantenimiento_drone = models.BooleanField(default=False, verbose_name="Reporte Mantenimiento Drones")
-    permission_boletin_ciberseguridad = models.BooleanField(default=False, verbose_name="Boletín de Ciberseguridad")
-
-    def __str__(self):
-        return self.permission_name
-    
-    class Meta:
-        verbose_name = "Permiso"
-        verbose_name_plural = "Permisos"
-
 
 class UserPermission(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Usuario")
     company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name="Empresa")
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE, verbose_name="Sucursal")
-    permission = models.ForeignKey(Permission, on_delete=models.CASCADE, verbose_name="Permisos")
+    permission_elevate = models.BooleanField(default=False, verbose_name="Usuario con permisos Elevados")
+    permission_reporte_incidente = models.BooleanField(default=False, verbose_name="Reporte de Incidentes")
 
     def __str__(self):
         return self.user.username
@@ -99,10 +82,6 @@ class IncidentCategory(models.Model):
         verbose_name_plural = "Categorías de incidentes"
 
 
-
-
-
-
 class EstatusReporte(models.Model):
     id = models.AutoField(primary_key=True)
     estatus = models.CharField(max_length=255, verbose_name="Estatus")
@@ -113,7 +92,6 @@ class EstatusReporte(models.Model):
     class Meta:
         verbose_name = "Estatus de reporte"
         verbose_name_plural = "Estatus de reportes"
-
 
 
 class ReporteIncidente(models.Model):

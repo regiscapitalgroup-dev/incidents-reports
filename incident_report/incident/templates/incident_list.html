@@ -77,6 +77,9 @@
 				<!--begin::Table container-->
 				<div class="table-responsive">
 					<!--begin::Table-->
+				{% if request.user.is_authenticated %}
+					{% if user_permission.permission_reporte_incidente %}
+					{{ request.user.username }}
 					<table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
 						<!--begin::Table head-->
 						<thead>
@@ -97,10 +100,10 @@
 							<tr>
 								<td>{{ incident.tipo_reporte }}</td>
 								<td>{{ incident.categoria_reporte }}</td>
-								<td>{{ incident.ubicacion_reporte }}</td>
-								<td>{{ incident.fecha_reporte }}</td>
-								<td>{{ incident.cliente_reporte }}</td>
-								<td>{{ incident.usuario_reporte }}</td>
+								<td>{{ incident.branch }}</td>
+								<td>{{ incident.report_date }}</td>
+								<td>{{ incident.estatus_reporte }}</td>
+								<td><a href="{% url 'view_pdf' incident.id %}" target="_blank">Ver Archivo</a></td>
 								<td>
 									<div class="d-flex justify-content-end flex-shrink-0">
 										<a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
@@ -141,6 +144,12 @@
 						</tbody>
 						<!--end::Table body-->
 					</table>
+					{% else %}
+					<p>No tienes permisos para ver este reporte</p>
+					{% endif %}
+				{% else %}
+				<p>No tienes permisos para ver este reporte</p>
+				{% endif %}
 					<!--end::Table-->
 				</div>
 				<!--end::Table container-->
